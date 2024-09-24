@@ -20,7 +20,7 @@ struct Queue *createQueue(struct Queue *arr, int qSize)
 }
 int isEmpty(struct Queue *arr)
 {
-    if (arr->front == -1 && arr->rear == -1)
+    if (arr->front == arr->rear)
     {
         return 1;
     }
@@ -54,51 +54,26 @@ struct Queue *Enqueue(struct Queue *arr)
     int val = 0;
     printf("Enter value to insert in queue: ");
     scanf("%d",&val);
-    if (isEmpty(arr))
-    {
-        arr->front++;
-        arr->rear++;
-        arr->ptr[arr->front] = val;
-        return arr;
-    }
-    else
-    {
-        arr->rear++;
-        arr->ptr[arr->rear] = val;
-        return arr;
-    }
+    arr->rear++;
+    arr->ptr[arr->rear] = val;
+    return arr;
    
 }
-struct Queue *Dequeue(struct Queue *arr)
+ int Dequeue(struct Queue *arr)
 {
     int val;
-    int temp = 0;
-    if (isEmpty(arr))
-    {
-        printf("***Queue is Empty!*** \n");
-        return arr;
-    }
-    else if (arr->front == arr->rear)   
-    {
-        val = arr->ptr[arr->front];
-        printf(" %d \n",val);
-        arr->front--;
-        arr->rear--;
-        return arr;
-    }
-    else
-    {
-        val = arr->ptr[arr->front];
-        temp = arr->front;
-        while (temp != arr->rear)
+    int temp = arr->front;
+    temp++;
+    val = arr->ptr[temp];
+    while (temp != arr->rear)
         {
             arr->ptr[temp] = arr->ptr[temp+1];  //shift values to left
             temp++;
         }
-        arr->rear--;
-        printf(" %d ",val);
-        return arr;
-    }
+    arr->rear--;
+    printf(" %d ",val);
+    return val;
+   
 }
 int peak(struct Queue *arr)
 {
@@ -137,7 +112,7 @@ int main(int argc, char const *argv[])
     printf("*** Dequeue ***\n ");
     while (!isEmpty(que_obj))
     {
-        que_obj = Dequeue(que_obj);
+        Dequeue(que_obj);
     }
     
     freeMemory(que_obj);
