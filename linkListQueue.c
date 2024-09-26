@@ -67,16 +67,41 @@ struct Node *Enqueue(struct Node *head)
         else
         {
             n->data = val;
-            rear->next = n;
-            rear = n;
+            rear->next = n; //assign new node next to rear
+            rear = n;    //point rear to new node
         } 
           return head;
     }
+    else
+    {
+        printf("Queue is full! \n");
+    }
+    
     
 }
-int Dequeue(struct Node *head)
+struct Node *Dequeue(struct Node *head)
 {
-
+    if (!isEmpty(front,rear))
+    {
+        struct Node *temp = head;
+        printf(" %d--> \n",head->data);
+        head = head->next;
+        front = front->next;
+        if (front == NULL && head == NULL)  //after deletion of last Node assign rear pointer to NULL
+        {
+            rear = NULL;
+        }
+        
+        free(temp);
+        temp = NULL;
+        return head;
+    }
+    else
+    {
+        printf("Queue is Empty! \n");
+        return head;
+    }
+    
 }
 int main(int argc, char const *argv[])
 {
@@ -92,5 +117,10 @@ int main(int argc, char const *argv[])
     queueTraversal(head);
 
     printf("\n *** Dequeue *** \n");
+    while (!isEmpty(front,rear))
+    {
+        head = Dequeue(head);
+    }
+    
     return 0;
 }
