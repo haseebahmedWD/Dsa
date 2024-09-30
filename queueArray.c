@@ -1,7 +1,6 @@
 // This program is about Queue implementation using array
 #include<stdio.h>
 #include<stdlib.h>
-int counter = 0; //this counter used to keep track of elements inserted or deleted from queue
 struct Queue
 {
     int size;
@@ -21,7 +20,7 @@ struct Queue *createQueue(struct Queue *arr, int qSize)
 }
 int isEmpty(struct Queue *arr)
 {
-    if ((arr->front == arr->rear) && counter == 0)
+    if ((arr->front == arr->rear + 1))
     {
         printf("Queue is Empty! \n");
         return 1;
@@ -34,7 +33,7 @@ int isEmpty(struct Queue *arr)
 }
 int isFull(struct Queue *arr)
 {
-    if (counter > arr->size-1)
+    if (arr->rear == arr->size-1)
     {
         printf("Queue is full! \n");
         return 1;
@@ -57,36 +56,23 @@ struct Queue *Enqueue(struct Queue *arr)
     int val = 0;
     printf("Enter value to insert in queue: ");
     scanf("%d",&val);
-    arr->rear = (arr->rear + 1) % arr->size;    //formula to get 0 index after size - 1 index
+    arr->rear++;
     arr->ptr[arr->rear] = val;
-    counter++;
-    //printf("Counter:  %d \n",counter);
     return arr;
    
 }
  int Dequeue(struct Queue *arr)
 {
     int val;
-    if (arr->front == -1)   //very first element dequeue 
+    if (arr->front == -1)
     {
-        arr->front++;
-    }
-    if (arr->front == arr->rear)    //if there is last element left in queue
-    {
-        val = arr->ptr[arr->front];
-        printf(" arr[%d]: %d \n",arr->front,val);
-        arr->ptr[arr->front] = 0;
-        counter--;
-        // printf("Counter:  %d \n",counter);
-        return val;
+       arr->front++;
     }
     
     val = arr->ptr[arr->front];
     printf(" arr[%d]: %d \n",arr->front,val);
     arr->ptr[arr->front] = 0;
-    arr->front = (arr->front + 1) % arr->size; //formula to get 0 index after size - 1 index
-    counter--;
-    // printf("Counter:  %d \n",counter);
+    arr->front++;
     return val;
    
 }
@@ -139,23 +125,6 @@ int main(int argc, char const *argv[])
         {
             break;
         }
-    }
-    printf("*** Enqueue ***\n");
-    while (!isFull(que_obj))
-    {
-        que_obj = Enqueue(que_obj);
-        getchar();
-        printf("press 'q' to quit or 'c' to continue: ");
-        scanf("%c",&c);
-        if (c == 'q' || isFull(que_obj))
-        {
-            break;
-        }
-    }
-    printf("*** Peak ***\n");
-    while (!peak(que_obj))
-    {
-        peak(que_obj);
     }
     freeMemory(que_obj);
     return 0;
