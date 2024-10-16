@@ -14,12 +14,12 @@ void Merge(int *ptr, int low, int mid, int high)
 {
   
     int temp = 0;
-    int i = low;
-    int j = mid + 1;
-    int k = low;
+    int i = low;        //i moves from 0 to mid
+    int j = mid + 1;    // j moves from mid+1 to high
+    int k = low;        //k control iteration of second array, it start from 0
     int B[high + 1];
   
-    while (i <= mid && j<= high)
+    while (i <= mid && j<= high)    
     {
         if (ptr[i] < ptr[j])
         {
@@ -34,13 +34,13 @@ void Merge(int *ptr, int low, int mid, int high)
             k++;
         }
     }
-    while (i<=mid)
+    while (i<=mid)  //copy remining elements of array which are <= mid
     {
         B[k] = ptr[i];
         i++;
         k++;
     }
-    while (j<=high)
+    while (j<=high) //copy remaining elements of array which are >= high
     {
         B[k] = ptr[j];
         j++;
@@ -48,7 +48,7 @@ void Merge(int *ptr, int low, int mid, int high)
     }
     for (int i = low; i <=high; i++)
     {
-        ptr[i] = B[i];
+        ptr[i] = B[i];  //copying second array data into original array
     }
     
 }
